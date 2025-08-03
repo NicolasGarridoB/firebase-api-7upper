@@ -1,0 +1,24 @@
+{
+  "name": "7upper-api",
+  "version": "1.0.0",
+  "description": "API para 7Upper desplegada en Vercel",
+  "main": "api/index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "tsc",
+    "start": "vercel start",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.3",
+    "@vercel/node": "^3.0.0"
+  },
+  "private": true
+}

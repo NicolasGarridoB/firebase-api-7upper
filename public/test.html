@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 7Upper API</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .endpoint { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 5px; }
+        .method { display: inline-block; padding: 3px 8px; border-radius: 3px; font-weight: bold; color: white; }
+        .post { background-color: #28a745; }
+        .get { background-color: #007bff; }
+        textarea { width: 100%; height: 100px; margin: 10px 0; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .response { background-color: #f8f9fa; padding: 10px; border-radius: 3px; margin-top: 10px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>7Upper API - Test Page</h1>
+    <p>Esta página te permite probar los endpoints de la API desplegada en Vercel.</p>
+    
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/registro</h3>
+        <p>Registrar un nuevo usuario</p>
+        <textarea id="registro-body">{
+  "nombre": "Juan Pérez",
+  "correo": "juan@ejemplo.com",
+  "contraseña": "123456",
+  "fechaNacimiento": "1990-01-01"
+}</textarea>
+        <button onclick="testEndpoint('registro', 'POST')">Probar</button>
+        <div id="registro-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/login</h3>
+        <p>Iniciar sesión</p>
+        <textarea id="login-body">{
+  "correo": "juan@ejemplo.com",
+  "contraseña": "123456"
+}</textarea>
+        <button onclick="testEndpoint('login', 'POST')">Probar</button>
+        <div id="login-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/dieta</h3>
+        <p>Crear una dieta</p>
+        <textarea id="dieta-body">{
+  "usuarioId": "usuario123",
+  "tipo": "Vegetariana",
+  "alergias": ["gluten", "lácteos"],
+  "noDeseados": ["champiñones"],
+  "preferidos": ["ensaladas", "frutas"]
+}</textarea>
+        <button onclick="testEndpoint('dieta', 'POST')">Probar</button>
+        <div id="dieta-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/dieta?usuarioId=usuario123</h3>
+        <p>Obtener dieta por usuario</p>
+        <button onclick="testGetDieta()">Probar</button>
+        <div id="dieta-get-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/proveedor</h3>
+        <p>Crear un proveedor</p>
+        <textarea id="proveedor-body">{
+  "nombre": "Restaurante El Buen Sabor",
+  "fotoPerfil": "https://ejemplo.com/foto.jpg",
+  "puntuacion": 4.5,
+  "totalClientes": 150,
+  "serviciosActivos": 3
+}</textarea>
+        <button onclick="testEndpoint('proveedor', 'POST')">Probar</button>
+        <div id="proveedor-response" class="response"></div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin; // Usa el mismo dominio
+
+        async function testEndpoint(endpoint, method) {
+            const bodyElement = document.getElementById(`${endpoint}-body`);
+            const responseElement = document.getElementById(`${endpoint}-response`);
+            
+            try {
+                const body = bodyElement ? bodyElement.value : null;
+                const response = await fetch(`${API_BASE}/api/${endpoint}`, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body
+                });
+                
+                const result = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testGetDieta() {
+            const responseElement = document.getElementById('dieta-get-response');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/dieta?usuarioId=usuario123`);
+                const result = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
