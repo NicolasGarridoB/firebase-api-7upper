@@ -21,48 +21,78 @@
     <p>Esta página te permite probar los endpoints de la API desplegada en Vercel.</p>
     
     <div class="endpoint">
-        <h3><span class="method post">POST</span> /api/registro</h3>
-        <p>Registrar un nuevo usuario</p>
-        <textarea id="registro-body">{
+        <h3><span class="method post">POST</span> /api/clientes</h3>
+        <p>Crear un nuevo cliente</p>
+        <textarea id="clientes-body">{
+  "proveedorId": "prov123",
   "nombre": "Juan Pérez",
   "correo": "juan@ejemplo.com",
-  "contraseña": "123456",
-  "fechaNacimiento": "1990-01-01"
+  "telefono": "+1234567890",
+  "direccion": "Calle 123"
 }</textarea>
-        <button onclick="testEndpoint('registro', 'POST')">Probar</button>
-        <div id="registro-response" class="response"></div>
+        <button onclick="testEndpoint('clientes', 'POST')">Probar</button>
+        <div id="clientes-response" class="response"></div>
     </div>
 
     <div class="endpoint">
-        <h3><span class="method post">POST</span> /api/login</h3>
-        <p>Iniciar sesión</p>
-        <textarea id="login-body">{
-  "correo": "juan@ejemplo.com",
-  "contraseña": "123456"
-}</textarea>
-        <button onclick="testEndpoint('login', 'POST')">Probar</button>
-        <div id="login-response" class="response"></div>
+        <h3><span class="method get">GET</span> /api/clientes?proveedorId=prov123</h3>
+        <p>Obtener clientes del proveedor</p>
+        <button onclick="testGetClientes()">Probar</button>
+        <div id="clientes-get-response" class="response"></div>
     </div>
 
     <div class="endpoint">
-        <h3><span class="method post">POST</span> /api/dieta</h3>
-        <p>Crear una dieta</p>
-        <textarea id="dieta-body">{
-  "usuarioId": "usuario123",
-  "tipo": "Vegetariana",
-  "alergias": ["gluten", "lácteos"],
-  "noDeseados": ["champiñones"],
-  "preferidos": ["ensaladas", "frutas"]
+        <h3><span class="method post">POST</span> /api/servicios</h3>
+        <p>Crear un servicio</p>
+        <textarea id="servicios-body">{
+  "proveedorId": "prov123",
+  "nombre": "Servicio Premium",
+  "descripcion": "Descripción del servicio",
+  "precio": 150.00,
+  "categoria": "Premium",
+  "disponible": true,
+  "duracionEstimada": "2 horas"
 }</textarea>
-        <button onclick="testEndpoint('dieta', 'POST')">Probar</button>
-        <div id="dieta-response" class="response"></div>
+        <button onclick="testEndpoint('servicios', 'POST')">Probar</button>
+        <div id="servicios-response" class="response"></div>
     </div>
 
     <div class="endpoint">
-        <h3><span class="method get">GET</span> /api/dieta?usuarioId=usuario123</h3>
-        <p>Obtener dieta por usuario</p>
-        <button onclick="testGetDieta()">Probar</button>
-        <div id="dieta-get-response" class="response"></div>
+        <h3><span class="method get">GET</span> /api/servicios?proveedorId=prov123</h3>
+        <p>Obtener servicios del proveedor</p>
+        <button onclick="testGetServicios()">Probar</button>
+        <div id="servicios-get-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/pedidos</h3>
+        <p>Crear un pedido</p>
+        <textarea id="pedidos-body">{
+  "proveedorId": "prov123",
+  "clienteId": "cliente123",
+  "clienteNombre": "Juan Pérez",
+  "servicioId": "servicio789",
+  "servicioNombre": "Servicio Premium",
+  "estado": "pendiente",
+  "total": 150.00,
+  "descripcion": "Pedido especial"
+}</textarea>
+        <button onclick="testEndpoint('pedidos', 'POST')">Probar</button>
+        <div id="pedidos-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/pedidos?proveedorId=prov123</h3>
+        <p>Obtener pedidos del proveedor</p>
+        <button onclick="testGetPedidos()">Probar</button>
+        <div id="pedidos-get-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/pendientes?proveedorId=prov123</h3>
+        <p>Obtener pedidos pendientes</p>
+        <button onclick="testGetPendientes()">Probar</button>
+        <div id="pendientes-response" class="response"></div>
     </div>
 
     <div class="endpoint">
@@ -103,11 +133,43 @@
             }
         }
 
-        async function testGetDieta() {
-            const responseElement = document.getElementById('dieta-get-response');
-            
+        async function testGetClientes() {
+            const responseElement = document.getElementById('clientes-get-response');
             try {
-                const response = await fetch(`${API_BASE}/api/dieta?usuarioId=usuario123`);
+                const response = await fetch(`${API_BASE}/api/clientes?proveedorId=prov123`);
+                const result = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testGetServicios() {
+            const responseElement = document.getElementById('servicios-get-response');
+            try {
+                const response = await fetch(`${API_BASE}/api/servicios?proveedorId=prov123`);
+                const result = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testGetPedidos() {
+            const responseElement = document.getElementById('pedidos-get-response');
+            try {
+                const response = await fetch(`${API_BASE}/api/pedidos?proveedorId=prov123`);
+                const result = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testGetPendientes() {
+            const responseElement = document.getElementById('pendientes-response');
+            try {
+                const response = await fetch(`${API_BASE}/api/pendientes?proveedorId=prov123`);
                 const result = await response.json();
                 responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(result, null, 2)}`;
             } catch (error) {

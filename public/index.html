@@ -150,8 +150,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">7Upper API</div>
-        <div class="subtitle">API REST para gestión de usuarios, dietas y proveedores</div>
+        <div class="logo">7Upper API - Proveedores</div>
+        <div class="subtitle">API REST para gestión de proveedores - Clientes, Pedidos, Servicios</div>
         
         <div class="status">
             <div class="status-dot"></div>
@@ -170,22 +170,28 @@
         <div class="endpoints">
             <h3>📡 Endpoints Disponibles</h3>
             <div class="endpoint">
-                <span class="method post">POST</span> /api/registro - Registrar usuario
+                <span class="method get">GET</span> /api/clientes?proveedorId={id} - Obtener clientes
             </div>
             <div class="endpoint">
-                <span class="method post">POST</span> /api/login - Iniciar sesión
+                <span class="method post">POST</span> /api/clientes - Crear cliente
             </div>
             <div class="endpoint">
-                <span class="method get">GET</span> /api/dieta?usuarioId={id} - Obtener dieta
+                <span class="method get">GET</span> /api/pedidos?proveedorId={id} - Obtener pedidos
             </div>
             <div class="endpoint">
-                <span class="method post">POST</span> /api/dieta - Crear dieta
+                <span class="method post">POST</span> /api/pedidos - Crear pedido
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span> /api/servicios?proveedorId={id} - Obtener servicios
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span> /api/servicios - Crear servicio
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span> /api/pendientes?proveedorId={id} - Obtener pendientes
             </div>
             <div class="endpoint">
                 <span class="method get">GET</span> /api/proveedor?id={id} - Obtener proveedor
-            </div>
-            <div class="endpoint">
-                <span class="method post">POST</span> /api/proveedor - Crear proveedor
             </div>
         </div>
         
