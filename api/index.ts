@@ -13,13 +13,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'GET') {
     res.status(200).json({
-      message: '7Upper API está funcionando correctamente',
+      message: '7Upper API Proveedores está funcionando correctamente',
       timestamp: new Date().toISOString(),
       endpoints: {
-        'POST /api/registro': 'Registrar nuevo usuario',
-        'POST /api/login': 'Iniciar sesión',
-        'GET /api/dieta?usuarioId={id}': 'Obtener dieta por usuario',
-        'POST /api/dieta': 'Crear dieta',
+        'GET /api/clientes?proveedorId={id}': 'Obtener clientes del proveedor',
+        'POST /api/clientes': 'Crear nuevo cliente',
+        'PUT /api/clientes?id={id}': 'Actualizar cliente',
+        'DELETE /api/clientes?id={id}': 'Eliminar cliente',
+        'GET /api/pedidos?proveedorId={id}': 'Obtener pedidos del proveedor',
+        'POST /api/pedidos': 'Crear nuevo pedido',
+        'PUT /api/pedidos?id={id}': 'Actualizar pedido',
+        'DELETE /api/pedidos?id={id}': 'Eliminar pedido',
+        'GET /api/servicios?proveedorId={id}': 'Obtener servicios del proveedor',
+        'POST /api/servicios': 'Crear nuevo servicio',
+        'PUT /api/servicios?id={id}': 'Actualizar servicio',
+        'DELETE /api/servicios?id={id}': 'Eliminar servicio',
+        'GET /api/pendientes?proveedorId={id}': 'Obtener pedidos pendientes del proveedor',
         'GET /api/proveedor?id={id}': 'Obtener proveedor por ID',
         'POST /api/proveedor': 'Crear proveedor'
       }

@@ -1,35 +1,70 @@
-# 7Upper API - Vercel
+# 7Upper API - Proveedores
 
-API REST para la aplicación 7Upper desplegada en Vercel.
+API REST para proveedores de la aplicación 7Upper desplegada en Vercel.
+
+## Ramas del Proyecto
+
+- **`main`**: Endpoints para usuarios
+- **`proveedores-develop`**: Endpoints para proveedores (rama actual)
 
 ## Estructura del Proyecto
 
 ```
 ├── api/                    # Endpoints de Vercel
-│   ├── registro.ts        # POST /api/registro
-│   ├── login.ts           # POST /api/login
-│   ├── dieta.ts           # GET/POST /api/dieta
-│   └── proveedor.ts       # GET/POST /api/proveedor
+│   ├── clientes.ts        # GET/POST/PUT/DELETE /api/clientes
+│   ├── pedidos.ts         # GET/POST/PUT/DELETE /api/pedidos
+│   ├── servicios.ts       # GET/POST/PUT/DELETE /api/servicios
+│   ├── pendientes.ts      # GET /api/pendientes
+│   ├── proveedor.ts       # GET/POST /api/proveedor
+│   └── index.ts           # GET /api (info de endpoints)
 ├── lib/                   # Lógica de negocio
 │   ├── firebase.ts        # Configuración de Firebase
 │   ├── models/            # Modelos de datos
+│   │   ├── cliente.model.ts
+│   │   ├── pedido.model.ts
+│   │   ├── servicio.model.ts
+│   │   └── proveedor.model.ts
 │   └── services/          # Servicios de base de datos
+│       ├── cliente.service.ts
+│       ├── pedido.service.ts
+│       ├── servicio.service.ts
+│       └── proveedor.service.ts
 └── functions/             # Código original de Firebase Functions
 ```
 
 ## Endpoints Disponibles
 
-### Usuarios
-- `POST /api/registro` - Registrar nuevo usuario
-- `POST /api/login` - Iniciar sesión
+### Mis Clientes
+- `GET /api/clientes?proveedorId={id}` - Obtener clientes del proveedor
+- `GET /api/clientes?id={id}` - Obtener cliente específico
+- `POST /api/clientes` - Crear nuevo cliente
+- `PUT /api/clientes?id={id}` - Actualizar cliente
+- `DELETE /api/clientes?id={id}` - Eliminar cliente
 
-### Dietas
-- `POST /api/dieta` - Crear dieta
-- `GET /api/dieta?usuarioId={id}` - Obtener dieta por usuario
+### Pedidos
+- `GET /api/pedidos?proveedorId={id}` - Obtener pedidos del proveedor
+- `GET /api/pedidos?id={id}` - Obtener pedido específico
+- `POST /api/pedidos` - Crear nuevo pedido
+- `PUT /api/pedidos?id={id}` - Actualizar pedido
+- `DELETE /api/pedidos?id={id}` - Eliminar pedido
+
+### Servicios
+- `GET /api/servicios?proveedorId={id}` - Obtener servicios del proveedor
+- `GET /api/servicios?id={id}` - Obtener servicio específico
+- `POST /api/servicios` - Crear nuevo servicio
+- `PUT /api/servicios?id={id}` - Actualizar servicio
+- `DELETE /api/servicios?id={id}` - Eliminar servicio
+
+### Pendientes
+- `GET /api/pendientes?proveedorId={id}` - Obtener pedidos pendientes y en proceso
 
 ### Proveedores
 - `POST /api/proveedor` - Crear proveedor
 - `GET /api/proveedor?id={id}` - Obtener proveedor por ID
+
+## Documentación Detallada
+
+Para más información sobre los endpoints y ejemplos de uso, consulta [ENDPOINTS_PROVEEDORES.md](./ENDPOINTS_PROVEEDORES.md)
 
 ## Configuración para Despliegue
 
@@ -56,11 +91,15 @@ npm run dev
 npm run deploy
 ```
 
-## Migración desde Firebase Functions
+## Colecciones de Firebase
 
-Este proyecto fue migrado desde Firebase Functions a Vercel. Los principales cambios incluyen:
+Los datos se almacenan en las siguientes colecciones:
 
-1. **Estructura de archivos**: De `functions/src/api/` a `api/`
-2. **Manejo de requests**: De `onRequest()` a `handler(req, res)`
-3. **Configuración**: Variables de entorno en Vercel
-4. **CORS**: Configuración manual en cada endpoint
+- `clientes` - Clientes de los proveedores
+- `pedidos` - Pedidos realizados
+- `servicios` - Servicios ofrecidos por proveedores
+- `proveedores` - Información de proveedores
+
+## CORS
+
+Todos los endpoints tienen CORS habilitado para permitir peticiones desde cualquier origen.
