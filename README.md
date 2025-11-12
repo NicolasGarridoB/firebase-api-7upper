@@ -1,6 +1,8 @@
 # 7Upper API - Proveedores
 
-API REST para proveedores de la aplicación 7Upper desplegada en Vercel.
+API REST para proveedores de la aplicación 7Upper desplegada en Vercel. 
+
+CAMBIAR CREDENCIALES DE FIREBASE A LA ORIGINAL.
 
 ## Ramas del Proyecto
 
